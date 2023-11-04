@@ -16,8 +16,12 @@ function max(arry) {
    }
    return max;
 }
-arr1 = [1,25,29,0,-2,4920];
-r= max(arr1);
+arr_0 = parseFloat(prompt ("첫번째 수"))
+arr_1 = parseFloat(prompt ("두번째 수"))
+arr_2 = parseFloat(prompt ("세번째 수"))
+
+arr = [arr_0, arr_1, arr_2];
+r= max(arr);
 document.write(r+"<br>"); //최댓값리턴
 
 for(k=0;k<10;k++){
