@@ -1,0 +1,30 @@
+<script>
+
+function printhello(){
+    document.write("Hello<br>");
+} //함수
+function add(a,b,c,d){
+   return c*(a+b)-d;
+} //리턴
+
+function max(arry) {
+   max = -1
+   for ( i=0; i<arry.length; i++ ) {
+      if ( arry[i] > max) {
+         max = arry[i];
+      }
+   }
+   return max;
+}
+arr1 = [1,25,29,0,-2,4920];
+r= max(arr1);
+document.write(r+"<br>"); //최댓값리턴
+
+for(k=0;k<10;k++){
+   printhello();
+   r= add(k, k, k, k);
+   document.write(r+"<br>");
+}
+
+
+</script>
