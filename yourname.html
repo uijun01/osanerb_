@@ -1,0 +1,84 @@
+<html>
+<head>
+</head>
+
+<body>
+<center>
+  <h1> 친구들 이름 불러주기</h1>
+
+  <input type="button" id="tajaStart" value="종료">
+  <input type="checkbox" id="sori">소리끄기<br>
+  <input type="button" value="점수">
+  <input type="text" id="tajaPoints" size=7><br>
+  <progress id="rTime" value=100 max=100> </progress><br>
+  <input type="text" id="target" size=500>
+  <label id="alias"></label><br>
+  <input type="text" id="inputTyping" size=18><br>
+</center>
+<script>
+points = 0;
+gameEnd = false;
+dtid = null;
+jsName = ["간장공장공장장", "경찰청쇠창살", "촉촉한초코칩", "고려고교교복", "목이긴기린그림", "깐콩깍지안깐콩깍지", "백법학박사", "박법학박사", "빼빼마른빼빼로", "신진샹숑가수", "포파포프", "챠프포프킨과 치스챠코프는 라흐마니노프의 피아노 콘체르토의 선율", "스위스에서 오셔서 산새들이 속삭이는 산림 숲속의 수사슴과 샘 속 송사리 새끼를 샅샅이 수색해 식사하고 산 속 고인돌 사이 샘물로 세수하며 살아가는 삼십 삼살 샴쌍둥이 미세스 스미스씨와 미스터 심슨씨는 삼성 설립 사장의 자상한 회사 자산 상속자인 사촌의 사돈이면서 수하물 수송 솜씨를 자랑하는 심삼속씨와 숫기있고 숭글숭글한 숫색시 삼성소속 식산업 종사자 심삼순씨를 만나서 삼성 소속 수산물 운송수송 수속 및 수색 담당 실장에게 스위스에서 수사슴을 수색했던 것을 인정받아 스위스산 수산물 운송 수송 과정에서 상해 삭힌 냄새가 나는 수산물을 샅샅이 수색해내는 삼성 수산물 운송수송 소속 수색 사원이 되자 산 속을 맨발바닥 두 손바닥 열 발가락 닳게 방방곡곡 뒤져 깊은 숲 산기슭 속 수풀 깊숙이 팔꿈치를 꿈틀꿈틀거려 찾아낸 스위스연방 지도 지리지를 들고 풀숲 샘물 속 수산물을 쉴새없이 수색하다 삼림 산성수 수색 담당 신상순 씨가 실수로 수송한 삼림 산성수 통 삼 톤에 의해 손가락 세 가닥과 열 발가락이 산화되어 응급실 수술실에서 응급수술하게 되었는데 수술실 실수로 쉽사리 수술이 잘 안되어 수술실 식사로 나온 산양삼삼계탕을 삼키지 못하자 심신에 좋다는 산삼을 달인 달콤한 홍삼산삼차를 슈르릅 들이켰더니 힘이 샘물 솟듯이 솟아 신상순 씨의 삼림 산성수 수송 수속 중 일어난 수술 건을 과실치사상죄로 고소하였지만 산성수 수색 담당 신상순 씨의 삼촌인 삼성 소속 식산업 종사자 심삼순씨의 사과로 셋이서 삼삼오오 삼월 삼십일일 세 시 삼십분 삼십 삼초에 쉰 세 살 김식사씨네 시내 스시식당에 시스루 룩으로 식사하러 가서 신선한 샥스핀 스시와 싱싱한 삼색샤시참치스시를 살사소스에 살살 슥삭슥삭 비빈 것과 스위스산 소세지 세 접시를 샤사샥 싹슬어 입속에 쑤셔넣어 살며시 삼키고 스산한 새벽 세시 십삼분 삼십 삼초에 숲 속 산림 산기슭 구석 풀숲 속으로 사라졌다"]
+jsAlias = ["잰","말","놀","이"]
+
+function setNewWord() {
+  if(gameEnd) {
+    return;
+  }
+  var k = Math.floor(Math.random()*jsName.length);
+  target.value = jsName[k];
+  k= Math.floor(Math.random()*jsAlias.length);
+  document.querySelector("#alias").innerHTML = jsAlias[k];
+  rTime.value = 100
+  dtid = setTimeout(decreaseTime, 1000)
+}
+function decreaseTime() {
+  rTime.value -= 10;
+  if(rTime.value == 0) {
+    setNewWord();
+  }
+  else {
+    dtid = setTimeout(decreaseTime, 1000);
+  }
+}
+function wordCheck(evt) {
+  if ( evt.keyCode == 13 ) {
+    if (target.value == inputTyping.value.toLowerCase() ) {
+      points += rTime.value;
+      tajaPoints.value = points;
+      playAudio();
+    }
+    clearTimeout(dtid)
+    inputTyping.value = ""
+    setNewWord()
+  }
+}
+function gameStop() {
+  gameEnd = true;
+  target.value = ""
+  inputTyping.value = ""
+  rTime.value = 0
+}
+var audio = new Audio("katalk.mp3")
+function playAudio() {
+  if(eval("sori").checked){
+  return;
+  }
+  audio.play();
+}
+function init() {
+  points=0;
+  gameEnd = false;
+  tajaPoints.value = 0;
+  tajaStart.onclick = gameStop;
+  inputTyping.onkeypress = wordCheck;
+  setNewWord();
+  inputTyping.focus()
+}
+// 시작
+init()
+</script>
+</body>
+
+</html>
